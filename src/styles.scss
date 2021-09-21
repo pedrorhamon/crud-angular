@@ -4,10 +4,10 @@
 @include mat-core();
 
 $custom-app-primary: mat-palette($mat-blue);
-$custom-app-secundaty: mat-palette($mat-indigo, A200, A400, 700);
-$custom-app-warn: mat-pallete($mat-red);
+$custom-app-secundary: mat-palette($mat-indigo, A200, A400, 700);
+$custom-app-warn: mat-palette($mat-red);
 
-$custom-theme: mat-light-theme($custom-app-primary, $custom-app-secundaty, $custom-app-warn);
+$custom-theme: mat-light-theme($custom-app-primary, $custom-app-secundary, $custom-app-warn);
 
 @include angular-material-theme($custom-theme);
 
