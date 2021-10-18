@@ -1,7 +1,10 @@
-import { CoursesService } from './../services/courses.service';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 import { Course } from '../models/course';
+import { CoursesService } from './../services/courses.service';
 
 @Component({
   selector: 'app-courses',
@@ -10,16 +13,34 @@ import { Course } from '../models/course';
 })
 export class CoursesComponent implements OnInit {
 
-  courses: Course[] = [];
-  displayedColumns = ['name', 'category'];
+  courses$: Observable<Course[]>;
+  displayedColumns = ['name','category'];
 
+  constructor(
+    private coursesService: CoursesService,
+    public dialog: MatDialog
+  ) {
+    this.courses$ = this.coursesService.list()
+    .pipe(
+      catchError(error => {
+        this.onError('Erro ao carregar cursos.');
+        return of([])
+      })
+    );
+  }
 
-  constructor(private coursesService: CoursesService) {
-
-    this.courses = this.coursesService.list();
+  onError(errorMsg: string) {
+    this.dialog.open(ErrorDialogComponent, {
+      data: errorMsg
+    });
   }
 
   ngOnInit(): void {
+
   }
 
 }
+function ErrorDialogComponent(ErrorDialogComponent: any, arg1: { data: string; }) {
+  throw new Error('Function not implemented.');
+}
+
