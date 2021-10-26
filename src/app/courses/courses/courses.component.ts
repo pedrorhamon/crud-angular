@@ -22,7 +22,7 @@ export class CoursesComponent implements OnInit {
   ) {
     this.courses$ = this.coursesService.list()
     .pipe(
-      catchError(error => {
+      catchError(() => {
         this.onError('Erro ao carregar cursos.');
         return of([])
       })
@@ -38,9 +38,5 @@ export class CoursesComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
-}
-function ErrorDialogComponent(ErrorDialogComponent: any, arg1: { data: string; }) {
-  throw new Error('Function not implemented.');
 }
 
